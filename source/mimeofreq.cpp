@@ -50,9 +50,14 @@ static DaisySeed hw;
 // Knob setting initializations
 float mix = 0.5f;
 float feedback_lvl = 0.5f;
-float delay_time = 0.5f;
 float rate = 0.316f;
 float depth = 0.5f;
+
+// Delay time smoothing
+// time_target: knob value, only updated when the knob moves meaningfully (deadband)
+// time_smooth: per-sample smoothed value that actually drives the delay line
+static float time_target = 0.5f;
+static float time_smooth = 0.5f;
 
 // ADC function declarations
 void initADC();
@@ -70,9 +75,6 @@ static Heavy_phaser *phs = nullptr;
 static float delayed[2];
 static float phased[2];
 
-// Low-pass filters
-static OnePole lpf;
-
 // Switch objects
 Switch del_switch;
 Switch phs_switch;
@@ -88,6 +90,15 @@ bool phs_bypass = true;
 
 int spdt_state = 0;
 
+// Smooth the delay time and update the delay line.
+// Call once per sample, inside any loop that uses the delay.
+static inline void updateDelayTime()
+{
+    fonepole(time_smooth, time_target, 0.0003f); // ~70 ms time constant at 48 kHz
+    float time_N = fminf(time_smooth * MAX_DELAY, MAX_DELAY - 2.0f);
+    del.SetDelay(time_N);
+}
+
 static void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
     float dry, wet;
@@ -95,16 +106,13 @@ static void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer
     procADC();
     procSwitch();
 
-    // Set delay time (samples)
-    float time_N = lpf.Process(delay_time) * MAX_DELAY;
-    del.SetDelay(time_N);
-    
     // COMBO
     if(!phs_bypass && !del_bypass) {
         switch(spdt_state) {
             case 1:
                 // DELAY into PHASER
                 for(size_t i = 0; i < size; i++) {
+                    updateDelayTime();
                     dry = in[0][i];
                     wet = del.Read();
                     del.Write(dry + (wet * feedback_lvl));
@@ -116,6 +124,7 @@ static void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer
                 // PHASER into DELAY
                 phs->processInline(const_cast<float*>(in[0]), phased, (int)size);
                 for(size_t i = 0; i < size; i++) {
+                    updateDelayTime();
                     dry = phased[i];
                     wet = del.Read();
                     del.Write(dry + (wet * feedback_lvl));
@@ -126,6 +135,7 @@ static void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer
                 // PHASER into DELAY (DEFAULT)
                 phs->processInline(const_cast<float*>(in[0]), phased, (int)size);
                 for(size_t i = 0; i < size; i++) {
+                    updateDelayTime();
                     dry = phased[i];
                     wet = del.Read();
                     del.Write(dry + (wet * feedback_lvl));
@@ -137,6 +147,9 @@ static void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer
     // DELAY
     else if(!del_bypass) {
         for(size_t i = 0; i < size; i++) {
+            // Smooth delay time and update the delay line
+            updateDelayTime();
+
             // Read dry input signal
             dry = in[0][i];
 
@@ -148,7 +161,7 @@ static void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer
 
             // Mix dry/wet signals, write as output
             out[0][i] = (dry * (1.0f - mix)) + (wet * mix);
-            }
+        }
     }
     // PHASER
     else if(!phs_bypass) {
@@ -174,10 +187,6 @@ int main(void)
 
     del.Init();
 
-    lpf.Init();
-    lpf.SetFilterMode(OnePole::FilterMode::FILTER_MODE_LOW_PASS);
-    lpf.SetFrequency(0.001f);
-    
     phs = new Heavy_phaser(hw.AudioSampleRate());
 
     phs->sendFloatToReceiver(Heavy_phaser::Parameter::In::ParameterIn::RATE, 0.5f);
@@ -206,9 +215,13 @@ void procADC()
 {
     mix          = fmap(hw.adc.GetFloat(knobOne),   0.0f,  1.0f,  Mapping::LINEAR);
     feedback_lvl = fmap(hw.adc.GetFloat(knobTwo),   0.0f,  1.0f,  Mapping::LINEAR);
-    delay_time   = fmap(hw.adc.GetFloat(knobThree), 0.05f, 1.0f,  Mapping::LINEAR);
-    rate         = fmap(hw.adc.GetFloat(knobFour),  0.01f, 10.0f,  Mapping::LOG);
+    rate         = fmap(hw.adc.GetFloat(knobFour),  0.01f, 10.0f, Mapping::LOG);
     depth        = fmap(hw.adc.GetFloat(knobFive),  0.0f,  1.0f,  Mapping::LINEAR);
+
+    // Delay time: only accept the knob change if it moved meaningfully
+    float t = fmap(hw.adc.GetFloat(knobThree), 0.05f, 1.0f, Mapping::LINEAR);
+    if(fabsf(t - time_target) > 0.002f)
+        time_target = t;
 
     if(!phs_bypass) {
         phs->sendFloatToReceiver(Heavy_phaser::Parameter::In::ParameterIn::RATE, rate);
