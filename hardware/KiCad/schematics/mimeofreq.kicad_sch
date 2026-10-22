@@ -4,6 +4,12 @@
 	(generator_version "10.0")
 	(uuid "fc444d3c-3a1a-4715-bcff-119f4d2b4d9e")
 	(paper "A4")
+	(title_block
+		(title "MIMEOFREQ")
+		(date "2026-10-21")
+		(rev "1")
+		(company "github.com/patrick-electrick")
+	)
 	(lib_symbols
 		(symbol "Connector:Jack-DC"
 			(pin_names
@@ -3695,7 +3701,7 @@
 		(uuid "3d2115b5-97c7-47da-96e0-f165bc90a92b")
 	)
 	(label "POT2"
-		(at 204.47 96.52 180)
+		(at 204.47 101.6 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3775,7 +3781,7 @@
 		(uuid "72554d32-b700-495b-bfb9-60c872db4598")
 	)
 	(label "POT4"
-		(at 204.47 101.6 180)
+		(at 204.47 96.52 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3815,7 +3821,7 @@
 		(uuid "a4ac7fb9-837b-4e76-8c58-e4a77f8138fa")
 	)
 	(label "POT1"
-		(at 204.47 93.98 180)
+		(at 204.47 104.14 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3865,7 +3871,7 @@
 		(uuid "db032cad-6c85-4cf7-afa4-6bb88c51b570")
 	)
 	(label "POT5"
-		(at 204.47 104.14 180)
+		(at 204.47 93.98 180)
 		(effects
 			(font
 				(size 1.27 1.27)
