@@ -1,7 +1,7 @@
 /** mimeofreq.cpp | Implementation file for overall Mimeofreq project.
- *  Author: Patrick F. (pf-ece)
+ *  Author: Patrick Fay
  *  
- *  Copyright 2026 pf-ece
+ *  Copyright 2026 patrick-electrick
  *  MIT License
  */
 
