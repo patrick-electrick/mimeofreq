@@ -838,7 +838,7 @@
 				)
 			)
 		)
-		(property "Value" "10µ"
+		(property "Value" "100n"
 			(at 1.25 2.5 0)
 			(layer "F.Fab")
 			(uuid "74e75309-9bb3-46dc-a448-63815da92f41")
@@ -9422,6 +9422,12 @@
 		(path "/0a95162b-d71b-4855-bae3-6f29b34876bd")
 		(sheetname "/")
 		(sheetfile "mimeofreq.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "1" "3" "2")
+			)
+		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_rect
@@ -10250,6 +10256,12 @@
 		(path "/3d292d7f-3cf5-4003-b72a-0d64990e0e54")
 		(sheetname "/")
 		(sheetfile "mimeofreq.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "1" "3" "2")
+			)
+		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_rect
@@ -14054,6 +14066,12 @@
 		(path "/6cb644f3-9bf0-473f-8ee6-9d2a3735fd15")
 		(sheetname "/")
 		(sheetfile "mimeofreq.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "1" "3" "2")
+			)
+		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_rect
@@ -14154,7 +14172,7 @@
 				)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "10µ"
 			(at 1.25 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -14902,6 +14920,12 @@
 		(path "/5d2d8334-19c2-40fd-95b5-4a25c195a1d1")
 		(sheetname "/")
 		(sheetfile "mimeofreq.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "1" "3" "2")
+			)
+		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_rect
@@ -15402,6 +15426,12 @@
 		(path "/9920fc3c-47cb-4cdc-9a00-d98d9057ed7a")
 		(sheetname "/")
 		(sheetfile "mimeofreq.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "1" "3" "2")
+			)
+		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_rect
@@ -18613,6 +18643,82 @@
 					(xy 171.26334 126.383664) (xy 171.502033 126.362037) (xy 171.66092 126.383328) (xy 171.808256 126.447261)
 					(xy 171.948558 126.558433) (xy 172.059234 126.699055) (xy 172.123417 126.849275) (xy 172.144953 127.013824)
 					(xy 172.144953 128.182794)
+				)
+			)
+		)
+	)
+	(dimension
+		(type orthogonal)
+		(layer "F.SilkS")
+		(uuid "05a597ef-a73e-405a-98df-a3da73c248e0")
+		(pts
+			(xy 115.29 76.57) (xy 115.29 136.57)
+		)
+		(height -1.07)
+		(orientation 1)
+		(format
+			(prefix "")
+			(suffix "")
+			(units 3)
+			(units_format 0)
+			(precision 4)
+			(suppress_zeroes yes)
+		)
+		(style
+			(thickness 0.1)
+			(arrow_length 1.27)
+			(text_position_mode 0)
+			(arrow_direction outward)
+			(extension_height 0.58642)
+			(extension_offset 0.5)
+			(keep_text_aligned yes)
+		)
+		(gr_text "60"
+			(at 113.12 106.57 90)
+			(layer "F.SilkS")
+			(uuid "05a597ef-a73e-405a-98df-a3da73c248e0")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.1)
+				)
+			)
+		)
+	)
+	(dimension
+		(type orthogonal)
+		(layer "F.SilkS")
+		(uuid "f58c9524-d5eb-4f61-ac18-0fdd0e215db8")
+		(pts
+			(xy 115.29 76.57) (xy 175.29 76.57)
+		)
+		(height -1.08)
+		(orientation 0)
+		(format
+			(prefix "")
+			(suffix "")
+			(units 3)
+			(units_format 0)
+			(precision 4)
+			(suppress_zeroes yes)
+		)
+		(style
+			(thickness 0.1)
+			(arrow_length 1.27)
+			(text_position_mode 0)
+			(arrow_direction outward)
+			(extension_height 0.58642)
+			(extension_offset 0.5)
+			(keep_text_aligned yes)
+		)
+		(gr_text "60"
+			(at 145.29 74.39 0)
+			(layer "F.SilkS")
+			(uuid "f58c9524-d5eb-4f61-ac18-0fdd0e215db8")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.1)
 				)
 			)
 		)

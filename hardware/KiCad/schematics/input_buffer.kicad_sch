@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "MIMEOFREQ")
-		(date "2026-10-21")
+		(date "2026-11-06")
 		(rev "1")
 		(company "github.com/patrick-electrick")
 	)
@@ -1783,7 +1783,7 @@
 				)
 			)
 		)
-		(property "Value" "10µ"
+		(property "Value" "100n"
 			(at 99.06 95.25 90)
 			(show_name no)
 			(do_not_autoplace no)
