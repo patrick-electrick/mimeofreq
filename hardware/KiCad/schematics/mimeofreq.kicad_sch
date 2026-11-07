@@ -5348,7 +5348,7 @@
 				)
 			)
 		)
-		(property "Value" "10µ"
+		(property "Value" "15µ"
 			(at 144.78 57.15 90)
 			(show_name no)
 			(do_not_autoplace no)
